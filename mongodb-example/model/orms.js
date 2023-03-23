@@ -1,21 +1,16 @@
 import {
-  createTransport, queryTransport, 
-  createEducation, queryEducation,
-  createSports, querySports
+  createTransport, queryTransport, removeTransport,
+  createEducation, queryEducation, removeEducation,
+  createSports, querySports, removeSports,
 } from "./repository.js"
 
-export async function ormCreateTransport(name, type, xcoord, ycoord, description) {
-  try {
-    return await createTransport([{ name, type, xcoord, ycoord, description }])
-  } catch (err) {
-    // console.error(err);
-    return { err: err.result };
-  }
-}
+/* -------------------------------------------------------------------------- */
+/*                                  Transport                                 */
+/* -------------------------------------------------------------------------- */
 
-export async function ormCreateManyTransport(arrayofobjects) {
+export async function ormCreateManyTransport(objectsArray) {
   try {
-    await createTransport(arrayofobjects)
+    await createTransport(objectsArray)
     return true
   } catch (err) {
     // console.error(err.result);
@@ -28,9 +23,17 @@ export async function ormQueryTransport(xgte, xlte, ygte, ylte) {
   return await queryTransport({ xcoord: { $gte: xgte, $lte: xlte }, ycoord: { $gte: ygte, $lte: ylte } })
 }
 
-export async function ormCreateManyEducation(arrayofobjects) {
+export async function ormRemoveTransport(params) {
+  return await removeTransport(params)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Education                                 */
+/* -------------------------------------------------------------------------- */
+
+export async function ormCreateManyEducation(objectsArray) {
   try {
-    await createEducation(arrayofobjects)
+    await createEducation(objectsArray)
     return true
   } catch (err) {
     // console.error(err.result);
@@ -42,9 +45,17 @@ export async function ormQueryEducation(xgte, xlte, ygte, ylte) {
   return await queryEducation({ xcoord: { $gte: xgte, $lte: xlte }, ycoord: { $gte: ygte, $lte: ylte } })
 }
 
-export async function ormCreateManySports(arrayofobjects) {
+export async function ormRemoveEducation(params) {
+  return await removeEducation(params)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Sports                                   */
+/* -------------------------------------------------------------------------- */
+
+export async function ormCreateManySports(objectsArray) {
   try {
-    await createSports(arrayofobjects)
+    await createSports(objectsArray)
     return true
   } catch (err) {
     // console.error(err.result);
@@ -54,4 +65,8 @@ export async function ormCreateManySports(arrayofobjects) {
 
 export async function ormQuerySports(xgte, xlte, ygte, ylte) {
   return await querySports({ xcoord: { $gte: xgte, $lte: xlte }, ycoord: { $gte: ygte, $lte: ylte } })
+}
+
+export async function ormRemoveSports(params) {
+  return await removeSports(params)
 }

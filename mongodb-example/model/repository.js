@@ -10,6 +10,10 @@ async function connect() {
   await mongoose.connect(mongoDB);
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  Transport                                 */
+/* -------------------------------------------------------------------------- */
+
 export async function createTransport(params) {
   // https://mongoosejs.com/docs/api/model.html#model_Model-insertMany
   // ordered=false : insert all the documents it can and report errors later
@@ -25,6 +29,14 @@ export async function queryTransport(filter) {
     .lean()
 }
 
+export async function removeTransport(params) {
+  return TransportModel.deleteMany(params)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Education                                 */
+/* -------------------------------------------------------------------------- */
+
 export async function createEducation(params) {
   return EducationModel.insertMany(params, { ordered: false })
 }
@@ -36,6 +48,14 @@ export async function queryEducation(filter) {
     .lean()
 }
 
+export async function removeEducation(params) {
+  return EducationModel.deleteMany(params)
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Sports                                   */
+/* -------------------------------------------------------------------------- */
+
 export async function createSports(params) {
   return SportsModel.insertMany(params, { ordered: false })
 }
@@ -45,4 +65,8 @@ export async function querySports(filter) {
     .find(filter)
     .select(['-_id', '-__v'])
     .lean()
+}
+
+export async function removeSports(params) {
+  return SportsModel.deleteMany(params)
 }
