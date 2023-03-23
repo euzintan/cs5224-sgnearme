@@ -58,7 +58,7 @@ console.log(results)
 
 /* ---------------------------------- Query --------------------------------- */
 
-// query WHERE 0 < xcoord < 2 AND 1 < ycoord < 3
+// query WHERE 0 <= xcoord <= 2 AND 1 <= ycoord <= 3
 
 let transportQueryPromise = ormQueryTransport(0, 2, 1, 3)
 let educationQueryPromise = ormQueryEducation(0, 2, 1, 3)
