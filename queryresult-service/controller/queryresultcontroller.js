@@ -1,11 +1,24 @@
 import {
     ormQueryTransport as _queryTransport, ormCreateManyTransport as _createManyTransport
 } from '../model/orms.js'
+import axios from "axios";
+
 
 export async function getTransport(req, res) {
     try {
         const { location } = req.body;
+        console.log(location)
         //dummy values
+        axios.get('https://developers.onemap.sg/commonapi/search?searchVal='+location+'&returnGeom=Y&getAddrDetails=Y')
+        .then(response => {
+            console.log(response.data.results[0])
+            console.log(response.data.results[0].LATITUDE)
+            console.log(response.data.results[0].LONGITUDE)
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+
         const resp = await _queryTransport(0, 50, 0, 1000);
         if (resp.err) {
             return res.status(409).json({ message: 'Could not query transport!' });
