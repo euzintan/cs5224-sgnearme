@@ -1,8 +1,6 @@
 import * as dotenv from "dotenv";
 import parseKML from "parse-kml";
 import { SportsModel } from "../model/schemas.js";
-import { ormCreateManySports, ormQuerySports } from "../model/orms.js";
-import { createSports } from "../model/repository.js";
 
 dotenv.config({ path: "data-query.env" });
 let sportsApi = process.env.SPORTS_API;
