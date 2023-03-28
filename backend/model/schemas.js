@@ -6,12 +6,11 @@ let TransportModelSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   type: {
     type: String,
     required: true,
-    enum: ["Bus", "MRT", "Taxi"],
+    enum: ["BUS", "MRT", "TAXI"],
   },
   xcoord: {
     type: Number,
