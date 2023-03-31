@@ -8,29 +8,32 @@ app.use(cors()); // config cors so that front-end can use
 app.options("*", cors());
 
 import {
+  getGeolocation,
   getTransport,
-  addTransport,
+  getSports,
+  getEducation,
 } from "./controller/queryresultcontroller.js";
 
 const router = express.Router();
 
-// const port = process.env.ENV === "PROD" ? process.env.PORT : 8001
-const port = 8001;
+const port = process.env.ENV === "PROD" ? process.env.PORT : 8001
 
 app.get("/", (req, res) => {
   res.send("Hello World from resultquery-service");
 });
 
 // Controller will contain all the Routes
-router.post("/add", addTransport);
+router.get("/geolocation", getGeolocation);
 router.get("/transport", getTransport);
+router.get("/sports", getSports);
+router.get("/education", getEducation);
 
 app.use("/api/query", router).all((_, res) => {
   res.setHeader("content-type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
 });
 app.listen(port, () =>
-  console.log(`userqueryservice listening on port ${port}`)
+  console.log(`queryresultservice listening on port ${port}`)
 );
 
 // Export our app for testing purposes
