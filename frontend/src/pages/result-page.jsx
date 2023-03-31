@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from "react-router-dom";
 
-export function Result() {
+
+export function Result({ address }) {
   let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    console.log("result", searchParams.get("query"))
+    console.log("result", searchParams.get("latitude"), searchParams.get("longitude"))
   }, [])
 
   return (
     <div>
-      {searchParams.get("query")}
+      {address}
+      {searchParams.get("latitude")}
+      {searchParams.get("longitude")}
     </div>
   );
 }

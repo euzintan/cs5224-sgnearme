@@ -20,7 +20,7 @@ export async function getGeolocation(req, res) {
   if (response.status !== 200) {
     return res.status(500).json({ message: "Server Error" });
   }
-  if (response.data.found === 0) {
+  if (!response.data.found) {
     return res.status(400).json({ message: "Invalid location" });
   }
   console.log(response.data.results[0]);
