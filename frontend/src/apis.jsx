@@ -18,7 +18,22 @@ export async function getGeolocation(location) {
       console.log(err)
       return null
     });
-  // const getResponse = "hello"
+
+  return getResponse;
+};
+
+export async function getService(route, latitude, longitude) {
+  console.log(QUERY_RESULT_SERVICE_URL)
+  const getResponse = await axio_instance
+    .get(route, { params: { latitude, longitude } })
+    .then((response) => {
+      console.log(response.data)
+      return response.data.data
+    })
+    .catch((err) => {
+      console.log(err)
+      return null
+    });
 
   return getResponse;
 };
