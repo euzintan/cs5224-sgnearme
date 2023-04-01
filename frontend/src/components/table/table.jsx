@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function StickyHeadTable({ headers, data }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -45,9 +45,9 @@ export default function StickyHeadTable({ headers, data }) {
                       const value = row[header.id];
                       return (
                         <TableCell key={header.id} align={header.align}>
-                          { Array.isArray(value) 
-                          ? value.join(', ')
-                          : value}
+                          {Array.isArray(value)
+                            ? value.join(', ')
+                            : value}
                         </TableCell>
                       );
                     })}
@@ -58,7 +58,7 @@ export default function StickyHeadTable({ headers, data }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 50]}
+        rowsPerPageOptions={[8, 20, 50]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
