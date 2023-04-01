@@ -10,6 +10,8 @@ app.options("*", cors());
 import {
   getTransport,
   addTransport,
+  getSchools,
+  getSports,
 } from "./controller/queryresultcontroller.js";
 
 const router = express.Router();
@@ -24,6 +26,8 @@ app.get("/", (req, res) => {
 // Controller will contain all the Routes
 router.post("/add", addTransport);
 router.get("/transport", getTransport);
+router.get("/schools", getSchools);
+router.get("/sports", getSports);
 
 app.use("/api/query", router).all((_, res) => {
   res.setHeader("content-type", "application/json");
