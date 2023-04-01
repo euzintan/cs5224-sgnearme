@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getService } from '../queryresult-api';
+
+import { getService } from '../apis/queryresult-api';
 import MyTable from '../components/table/table'
 import {
   transportHeaders, educationHeaders, sportsHeaders
@@ -11,6 +12,8 @@ import { TRANSPORT_TYPES, EDUCATION_TYPES } from '../data/service-types'
 
 export function Result({ address }) {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [staticMapUrl, setStaticMapUrl] = useState("")
 
   const [transport, setTransport] = useState([])
   const [education, setEducation] = useState([])
@@ -51,6 +54,8 @@ export function Result({ address }) {
       )
     )
 
+    setStaticMapUrl(createOneMapStaticMapUrl(latitude, longitude))
+
     setTransport(transportResults)
     setEducation(educationResults)
     setSports(sportsResults)
@@ -81,6 +86,8 @@ export function Result({ address }) {
       <h1>{address}</h1>
       <h1>Latitude {searchParams.get("latitude")}</h1>
       <h1>Longitude {searchParams.get("longitude")}</h1>
+
+      <img  src={staticMapUrl}/>
 
       <h2>Transport</h2>
       <MyModal modalTitle={"Transport Filter"} buttonString={"Open Transport Filter"}>
@@ -179,3 +186,17 @@ function degToRad(Value) {
   return Value * Math.PI / 180;
 }
 
+function createOneMapStaticMapUrl(lat, lng) {
+  const BASE_URL = "https://developers.onemap.sg/commonapi/staticmap/getStaticImage"
+  const params = {
+    layerchosen: "default",
+    zoom: 17,
+    width: 512,
+    height: 512,
+    lat,
+    lng
+  }
+  const finalUrl = BASE_URL + "?" + 
+    Object.entries(params).map((keyValuePair) => keyValuePair.join('=')).join('&')
+  return finalUrl
+}

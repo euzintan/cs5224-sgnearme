@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Box, TextField, Button } from '@mui/material'
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { getGeolocation } from "../queryresult-api"
+import { getGeolocation } from "../apis/queryresult-api"
 
 export function Query({ setAddress }) {
   const [query, setQuery] = useState("");
