@@ -1,5 +1,3 @@
-const SPACE = '\u00a0'
-const LF = '\u000A'
 
 export const transportHeaders = [
     { id: 'name', label: 'Name', minWidth: 170 },
@@ -13,6 +11,12 @@ export const transportHeaders = [
     {
         id: 'ycoord',
         label: 'Longitude',
+        minWidth: 170,
+        align: 'right',
+    },
+    {
+        id: 'distance',
+        label: 'Distance (m)',
         minWidth: 170,
         align: 'right',
     },
@@ -34,6 +38,12 @@ export const educationHeaders = [
         minWidth: 170,
         align: 'right',
     },
+    {
+        id: 'distance',
+        label: 'Distance (m)',
+        minWidth: 170,
+        align: 'right',
+    },
 ];
 
 
@@ -49,6 +59,12 @@ export const sportsHeaders = [
     {
         id: 'ycoord',
         label: 'Longitude',
+        minWidth: 170,
+        align: 'right',
+    },
+    {
+        id: 'distance',
+        label: 'Distance (m)',
         minWidth: 170,
         align: 'right',
     },

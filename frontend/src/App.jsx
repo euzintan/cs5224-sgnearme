@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route, Outlet, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { Query } from "./pages/query-page"
 import { Result } from "./pages/result-page"
