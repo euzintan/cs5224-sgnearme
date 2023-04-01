@@ -107,8 +107,8 @@ function latLongAreInSingapore(latitude, longitude) {
   }
 }
 
-const LATITUDE_RANGE = 0.002
-const LONGITUDE_RANGE = 0.002
+const LATITUDE_RANGE = 0.005
+const LONGITUDE_RANGE = 0.005
 function createLatLongRange(latitude, longitude) {
   return [
     latitude - LATITUDE_RANGE,

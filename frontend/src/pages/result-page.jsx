@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getService } from '../apis';
+import { getService } from '../queryresult-api';
+import MyTable from '../components/table/table'
+import {
+  transportHeaders, educationHeaders, sportsHeaders
+} from '../components/table/headers'
 
 export function Result({ address }) {
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [transport, setTransport] = useState([])
   const [education, setEducation] = useState([])
   const [sports, setSports] = useState([])
@@ -12,7 +16,10 @@ export function Result({ address }) {
   const loadData = async () => {
     const latitude = searchParams.get("latitude")
     const longitude = searchParams.get("longitude")
-    console.log("result", latitude, longitude)
+    if (isNaN(latitude) || isNaN(longitude)) {
+      navigate("/");
+      return
+    }
     const transportPromise = getService("/transport", latitude, longitude)
     const educationPromise = getService("/education", latitude, longitude)
     const sportsPromise = getService("/sports", latitude, longitude)
@@ -20,7 +27,6 @@ export function Result({ address }) {
       transportPromise, educationPromise, sportsPromise
     ])
     if (!transportResults || !educationResults || !sportsResults) {
-      console.log("null results")
       navigate("/");
       return
     }
@@ -39,12 +45,13 @@ export function Result({ address }) {
   return (
     <div>
       <h1>{address}</h1>
-      <h2>transport</h2>
-      <div>{transport.length}</div>
-      <h2>education</h2>
-      <div>{education.length}</div>
-      <h2>sports</h2>
-      <div>{sports.length}</div>
+
+      <h2>Transport</h2>
+      <MyTable headers={transportHeaders} data={transport} />
+      <h2>Education</h2>
+      <MyTable headers={educationHeaders} data={education} />
+      <h2>Sports</h2>
+      <MyTable headers={sportsHeaders} data={sports} />
     </div>
   );
 }

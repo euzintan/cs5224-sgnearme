@@ -11,7 +11,6 @@ export async function getGeolocation(location) {
   const getResponse = await axio_instance
     .get("/geolocation", { params: { location } })
     .then((response) => {
-      console.log(response)
       return response
     })
     .catch((err) => {
