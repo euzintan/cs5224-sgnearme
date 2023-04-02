@@ -10,25 +10,18 @@ export async function getTransport(req, res) {
   try {
     const { location } = req.body;
     console.log(location);
-    //dummy values
-    axios
-      .get(
-        "https://developers.onemap.sg/commonapi/search?searchVal=" +
-          location +
-          "&returnGeom=Y&getAddrDetails=Y"
-      )
-      .then((response) => {
-        console.log(response.data.results[0]);
-        console.log(response.data.results[0].LATITUDE);
-        console.log(response.data.results[0].LONGITUDE);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
-    const resp = await _queryTransport(0, 50, 0, 1000);
+    let latitude = 0.0;
+    let longitude = 0.0;
+    const request = axios.get("https://developers.onemap.sg/commonapi/search?searchVal=" + location + "&returnGeom=Y&getAddrDetails=Y")
+    const response = await request
+    console.log(response.data.results[0]);
+    latitude = Number(response.data.results[0].LATITUDE);
+    longitude = Number(response.data.results[0].LONGITUDE);
+
+    const resp = await _queryTransport(latitude - 0.02, latitude + 0.02, longitude - 0.02, longitude + 0.02);
     if (resp.err) {
-      return res.status(409).json({ message: "Could not query transport!" });
+      return res.status(409).json({ message: "Could not query schools!" });
     } else {
       return res.status(201).json({ transport: resp });
     }
@@ -67,26 +60,16 @@ export async function getSchools(req, res) {
   try {
     const { location } = req.body;
     console.log(location);
-    const latitude = 0;
-    const longitude = 0;
-    axios
-      .get(
-        "https://developers.onemap.sg/commonapi/search?searchVal=" +
-          location +
-          "&returnGeom=Y&getAddrDetails=Y"
-      )
-      .then((response) => {
-        console.log(response.data.results[0]);
-        console.log(response.data.results[0].LATITUDE);
-        latitude = response.data.results[0].LATITUDE;
-        console.log(response.data.results[0].LONGITUDE);
-        longitude = response.data.results[0].LONGITUDE;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     
-    const resp = await _querySchools(latitude, latitude, longitude, longitude);
+    let latitude = 0.0;
+    let longitude = 0.0;
+    const request = axios.get("https://developers.onemap.sg/commonapi/search?searchVal=" + location + "&returnGeom=Y&getAddrDetails=Y")
+    const response = await request
+    console.log(response.data.results[0]);
+    latitude = Number(response.data.results[0].LATITUDE);
+    longitude = Number(response.data.results[0].LONGITUDE);
+
+    const resp = await _querySchools(latitude - 0.02, latitude + 0.02, longitude - 0.02, longitude + 0.02);
     if (resp.err) {
       return res.status(409).json({ message: "Could not query schools!" });
     } else {
@@ -103,28 +86,18 @@ export async function getSports(req, res) {
   try {
     const { location } = req.body;
     console.log(location);
-    const latitude = 0;
-    const longitude = 0;
-    axios
-      .get(
-        "https://developers.onemap.sg/commonapi/search?searchVal=" +
-          location +
-          "&returnGeom=Y&getAddrDetails=Y"
-      )
-      .then((response) => {
-        console.log(response.data.results[0]);
-        console.log(response.data.results[0].LATITUDE);
-        latitude = response.data.results[0].LATITUDE;
-        console.log(response.data.results[0].LONGITUDE);
-        longitude = response.data.results[0].LONGITUDE;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
-    const resp = await _querySports(latitude, latitude, longitude, longitude);
+
+    let latitude = 0.0;
+    let longitude = 0.0;
+    const request = axios.get("https://developers.onemap.sg/commonapi/search?searchVal=" + location + "&returnGeom=Y&getAddrDetails=Y")
+    const response = await request
+    console.log(response.data.results[0]);
+    latitude = Number(response.data.results[0].LATITUDE);
+    longitude = Number(response.data.results[0].LONGITUDE);
+
+    const resp = await _querySports(latitude - 0.02, latitude + 0.02, longitude - 0.02, longitude + 0.02);
     if (resp.err) {
-      return res.status(409).json({ message: "Could not query sports!" });
+      return res.status(409).json({ message: "Could not query schools!" });
     } else {
       return res.status(201).json({ transport: resp });
     }
