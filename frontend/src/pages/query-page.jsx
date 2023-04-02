@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, TextField, Button } from '@mui/material'
+import { Box, Typography, TextField, Button, Container } from '@mui/material'
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { getGeolocation } from "../apis/queryresult-api"
 
@@ -34,13 +34,18 @@ export function Query({ setAddress }) {
   }
 
   return (
-    <Box>
-      <TextField
-        label="Location"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-      />
-      <Button variant="contained" onClick={sendSomething}>Submit</Button>
-    </Box>
+    <Container sx={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
+      <Typography marginBottom='24px' variant="h3">
+      Welcome to SGNearMe
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <TextField
+          label="Location"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <Button sx={{ marginTop: '12px' }}variant="contained" size="small" onClick={sendSomething}>Submit</Button>
+      </Box>
+    </Container>
   );
 }
