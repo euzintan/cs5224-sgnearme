@@ -3,7 +3,7 @@ import { TransportModel, EducationModel, SportsModel } from "./schemas.js";
 import * as dotenv from "dotenv";
 import { updateSchoolDB } from "../data-query/SchoolAPIQuery.js";
 
-dotenv.config({ path: "../model/.env" });
+dotenv.config();
 let mongoDB = process.env.DB_CLOUD_URI;
 
 await connect().catch((err) => console.log(err));
