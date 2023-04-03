@@ -36,7 +36,7 @@ export function Result({ address }) {
     const location = searchParams.get("location")
     let latitude = searchParams.get("latitude")
     let longitude = searchParams.get("longitude")
-    if (!location || isNaN(latitude) || isNaN(longitude)) {
+    if (!location && (isNaN(latitude) || isNaN(longitude))) {
       navigate("/");
       return
     }
