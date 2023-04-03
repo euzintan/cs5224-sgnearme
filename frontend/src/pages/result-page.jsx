@@ -30,15 +30,16 @@ export function Result({ address }) {
   const navigate = useNavigate();
 
   const loadData = async () => {
-    const latitude = searchParams.get("latitude")
-    const longitude = searchParams.get("longitude")
-    if (isNaN(latitude) || isNaN(longitude)) {
+    const location = searchParams.get("location")
+    let latitude = searchParams.get("latitude")
+    let longitude = searchParams.get("longitude")
+    if (!location || isNaN(latitude) || isNaN(longitude)) {
       navigate("/");
       return
     }
-    const transportPromise = getService("/transport", latitude, longitude)
-    const educationPromise = getService("/education", latitude, longitude)
-    const sportsPromise = getService("/sports", latitude, longitude)
+    const transportPromise = getService("/transport", {location, latitude, longitude})
+    const educationPromise = getService("/schools", {location, latitude, longitude})
+    const sportsPromise = getService("/sports", {location, latitude, longitude})
     const results = await Promise.all([
       transportPromise, educationPromise, sportsPromise
     ])
@@ -46,11 +47,13 @@ export function Result({ address }) {
       navigate("/");
       return
     }
+    latitude = parseFloat(results[0].latitude)
+    longitude = parseFloat(results[0].longitude)
     const [transportResults, educationResults, sportsResults] = results.map(
       (result) => addDistanceProperty(
-        parseFloat(latitude),
-        parseFloat(longitude),
-        result,
+        latitude,
+        longitude,
+        result.data,
       )
     )
 
