@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Box, Typography  } from '@mui/material'
 
 import { getService } from '../apis/queryresult-api';
 import MyTable from '../components/table/table'
@@ -14,6 +15,7 @@ export function Result({ address }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [staticMapUrl, setStaticMapUrl] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
   const [transport, setTransport] = useState([])
   const [education, setEducation] = useState([])
@@ -74,6 +76,7 @@ export function Result({ address }) {
 
   useEffect(() => {
     loadData()
+    setIsLoading(false)
   }, [])
 
   const filteredTransportsHeaders = transportHeaders.filter(header => transportHeaderFilter[header.label]);
@@ -83,6 +86,16 @@ export function Result({ address }) {
   const filteredTransport = transport.filter(row => transportDataFilter[row.type])
   const filteredEducation = education.filter(row => educationDataFilter[row.type])
   const filteredSports = sports.filter(row => row.type.every((type => sportsDataFilter[type])))
+
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <Typography variant="h5" style={{ textAlign: 'center' }}>
+          Loading...
+        </Typography>
+      </Box>
+    )
+  }
 
   return (
     <div>
