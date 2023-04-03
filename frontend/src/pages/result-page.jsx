@@ -28,6 +28,7 @@ export function Result({ address }) {
   const [transportDataFilter, setTransportDataFilter] = useState({})
   const [educationDataFilter, setEducationDataFilter] = useState({})
   const [sportsDataFilter, setSportsDataFilter] = useState({})
+  const [latlong, setLatLong] = useState({})
 
   const navigate = useNavigate();
 
@@ -51,6 +52,7 @@ export function Result({ address }) {
     }
     latitude = parseFloat(results[0].latitude)
     longitude = parseFloat(results[0].longitude)
+    setLatLong({latitude, longitude})
     const [transportResults, educationResults, sportsResults] = results.map(
       (result) => addDistanceProperty(
         latitude,
@@ -100,8 +102,8 @@ export function Result({ address }) {
   return (
     <div>
       <h1>{address}</h1>
-      <h1>Latitude {searchParams.get("latitude")}</h1>
-      <h1>Longitude {searchParams.get("longitude")}</h1>
+      <h1>Latitude {latlong.latitude}</h1>
+      <h1>Longitude {latlong.longitude}</h1>
 
       <img  src={staticMapUrl}/>
 
