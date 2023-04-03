@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Box, Typography  } from '@mui/material'
 
 import { getService } from '../apis/queryresult-api';
 import MyTable from '../components/table/table'
@@ -14,6 +15,7 @@ export function Result({ address }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [staticMapUrl, setStaticMapUrl] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
 
   const [transport, setTransport] = useState([])
   const [education, setEducation] = useState([])
@@ -30,15 +32,16 @@ export function Result({ address }) {
   const navigate = useNavigate();
 
   const loadData = async () => {
-    const latitude = searchParams.get("latitude")
-    const longitude = searchParams.get("longitude")
-    if (isNaN(latitude) || isNaN(longitude)) {
+    const location = searchParams.get("location")
+    let latitude = searchParams.get("latitude")
+    let longitude = searchParams.get("longitude")
+    if (!location || isNaN(latitude) || isNaN(longitude)) {
       navigate("/");
       return
     }
-    const transportPromise = getService("/transport", latitude, longitude)
-    const educationPromise = getService("/education", latitude, longitude)
-    const sportsPromise = getService("/sports", latitude, longitude)
+    const transportPromise = getService("/transport", {location, latitude, longitude})
+    const educationPromise = getService("/schools", {location, latitude, longitude})
+    const sportsPromise = getService("/sports", {location, latitude, longitude})
     const results = await Promise.all([
       transportPromise, educationPromise, sportsPromise
     ])
@@ -46,11 +49,13 @@ export function Result({ address }) {
       navigate("/");
       return
     }
+    latitude = parseFloat(results[0].latitude)
+    longitude = parseFloat(results[0].longitude)
     const [transportResults, educationResults, sportsResults] = results.map(
       (result) => addDistanceProperty(
-        parseFloat(latitude),
-        parseFloat(longitude),
-        result,
+        latitude,
+        longitude,
+        result.data,
       )
     )
 
@@ -71,6 +76,7 @@ export function Result({ address }) {
 
   useEffect(() => {
     loadData()
+    setIsLoading(false)
   }, [])
 
   const filteredTransportsHeaders = transportHeaders.filter(header => transportHeaderFilter[header.label]);
@@ -80,6 +86,16 @@ export function Result({ address }) {
   const filteredTransport = transport.filter(row => transportDataFilter[row.type])
   const filteredEducation = education.filter(row => educationDataFilter[row.type])
   const filteredSports = sports.filter(row => row.type.every((type => sportsDataFilter[type])))
+
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <Typography variant="h5" style={{ textAlign: 'center' }}>
+          Loading...
+        </Typography>
+      </Box>
+    )
+  }
 
   return (
     <div>

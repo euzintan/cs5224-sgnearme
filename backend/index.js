@@ -11,7 +11,7 @@ import {
   getGeolocation,
   getTransport,
   getSports,
-  getEducation,
+  getSchools,
 } from "./controller/queryresultcontroller.js";
 
 const router = express.Router();
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 router.get("/geolocation", getGeolocation);
 router.get("/transport", getTransport);
 router.get("/sports", getSports);
-router.get("/education", getEducation);
+router.get("/schools", getSchools);
 
 app.use("/api/query", router).all((_, res) => {
   res.setHeader("content-type", "application/json");
