@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { TransportModel, EducationModel, SportsModel } from "./schemas.js";
 import * as dotenv from "dotenv";
-import { updateSchoolDB } from "../data-query/SchoolAPIQuery.js";
 
 dotenv.config();
 let mongoDB = process.env.DB_CLOUD_URI;
@@ -20,17 +19,10 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 /* -------------------------------------------------------------------------- */
 
 export async function createTransport(params) {
-  // const arr = { name: 'Star Wars', type: 'Bus', xcoord: 10, ycoord: 101}
-  const arr = [{ name: "Star Wass", type: "Bus", xcoord: 10, ycoord: 101 }];
-
-  console.log(params);
-  console.log("YO");
-  console.log(arr);
   // https://mongoosejs.com/docs/api/model.html#model_Model-insertMany
   // ordered=false : insert all the documents it can and report errors later
   // return TransportModel.insertMany(arr, function(error, docs) {console.log("LLL")});
   return TransportModel.insertMany(params, { ordered: false });
-  // return new TransportModel(arr)
 }
 
 export async function queryTransport(filter) {
@@ -64,7 +56,6 @@ export async function removeEducation(params) {
 /* -------------------------------------------------------------------------- */
 
 export async function createSports(params) {
-  console.log("insert many: ", params);
   return SportsModel.insertMany(params, { ordered: false });
 }
 
